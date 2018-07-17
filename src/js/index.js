@@ -39,6 +39,7 @@ class ReactJsonView extends React.PureComponent {
 
     //all acceptable props and default values
     static defaultProps = {
+        immutableFields: [],
         src: {},
         name: 'root',
         theme: 'rjv-default',

@@ -230,7 +230,9 @@ class RjvObject extends React.PureComponent {
             parent_type,
             index_offset,
             groupArraysAfterLength,
-            namespace
+            namespace,
+            immutableFields,
+            onEdit
         } = this.props;
         const { object_type } = this.state;
         let theme = props.theme;
@@ -242,7 +244,6 @@ class RjvObject extends React.PureComponent {
         }
         keys.forEach(name => {
             variable = new JsonVariable(name, variables[name]);
-
             if (parent_type === 'array_group' && index_offset) {
                 variable.name = parseInt(variable.name) + index_offset;
             }
@@ -257,6 +258,7 @@ class RjvObject extends React.PureComponent {
                         src={variable.value}
                         namespace={namespace.concat(variable.name)}
                         parent_type={object_type}
+                        onEdit={!(this.props.immutableFields.includes(variable.name)) && onEdit}
                         {...props}
                     />
                 );
@@ -272,6 +274,7 @@ class RjvObject extends React.PureComponent {
 
                 elements.push(
                     <ObjectComponent
+                        {...props}
                         key={variable.name}
                         depth={depth + DEPTH_INCREMENT}
                         name={variable.name}
@@ -279,18 +282,20 @@ class RjvObject extends React.PureComponent {
                         namespace={namespace.concat(variable.name)}
                         type="array"
                         parent_type={object_type}
-                        {...props}
+                        onEdit={!(immutableFields.includes(variable.name)) && onEdit}
                     />
                 );
             } else {
+                let what = (!(immutableFields.includes(variable.name)) && onEdit)
                 elements.push(
                     <VariableEditor
+                        {...props}
                         key={variable.name + '_' + namespace}
                         variable={variable}
                         singleIndent={SINGLE_INDENT}
                         namespace={namespace}
                         type={this.props.type}
-                        {...props}
+                        onEdit={what}
                     />
                 );
             }

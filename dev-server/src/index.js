@@ -14,16 +14,12 @@ ReactDom.render(
     <div>
         {/* just pass in your JSON to the src attribute */}
         <JsonViewer
+            immutableFields={['string']}
             sortKeys
             style={{ padding: "30px", backgroundColor: "white" }}
             src={getExampleJson1()}
             collapseStringsAfterLength={12}
-            onEdit={e => {
-                console.log("edit callback", e)
-                if (e.new_value == "error") {
-                    return false
-                }
-            }}
+            onEdit={true}
             onDelete={e => {
                 console.log("delete callback", e)
             }}

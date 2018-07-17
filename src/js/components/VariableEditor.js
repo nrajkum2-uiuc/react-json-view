@@ -54,7 +54,8 @@ class VariableEditor extends React.PureComponent {
             onEdit,
             onDelete,
             onSelect,
-            rjvId
+            rjvId,
+
         } = this.props;
         const { editMode } = this.state;
 
